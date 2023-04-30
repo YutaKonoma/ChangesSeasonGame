@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 public class StartScene : MonoBehaviour
 {
     [SerializeField] Canvas _start;

@@ -1,184 +1,173 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class Changetile : MonoBehaviour
 {
     [Header("ベース")]
-    [SerializeField] private Tilemap _Tilemap; 
-    [SerializeField] private Tilemap _Treemap; 
-    [SerializeField] private Tilemap _Wotermap;
+    [SerializeField] private Tilemap _tilemap;
+    [SerializeField] private Tilemap _treemap;
+    [SerializeField] private Tilemap _wotermap;
 
     [Header("季節ごとのタイル")]
     [SerializeField] private TileBase _springtile;
-    [SerializeField] private TileBase _summertile; 
+    [SerializeField] private TileBase _summertile;
     [SerializeField] private TileBase _autumntile;
     [SerializeField] private TileBase _wintertile;
 
     [Header("季節ごとの木")]
-    [SerializeField] private TileBase _springtreetile; 
-    [SerializeField] private TileBase _summertreetile; 
-    [SerializeField] private TileBase _autumntreetile; 
-    [SerializeField] private TileBase _wintertreetile;
+    [SerializeField]
+    private TileBase[] _treeTile;
 
     [Header("水のタイル")]
-    [SerializeField] private TileBase _wotertile;　
+    [SerializeField]
+    private TileBase _wotertile;
 
     [Header("氷のタイル")]
-    [SerializeField] private TileBase _icetile; 
+    [SerializeField]
+    private TileBase _icetile;
 
     [Header("季節ごとのスプライト")]
-    [SerializeField] private Sprite _springsprite;
-    [SerializeField] private Sprite _summersprite; 
-    [SerializeField] private Sprite _autumnsprite; 
-    [SerializeField] private Sprite _wintersprite;
+    [SerializeField]
+    private Sprite[] _seasonSprite;
 
     [Header("季節ごとの木のスプライト")]
-    [SerializeField] private Sprite _springtreesprite;
-    [SerializeField] private Sprite _summertreesprite;
-    [SerializeField] private Sprite _autumntreesprite; 
-    [SerializeField] private Sprite _wintertreesprite;
+    [SerializeField]
+    private Sprite[] _treeSprite;
 
+    [SerializeField]
     [Header("水のスプライト")]
-    [SerializeField] private Sprite _wotersprite;
-    
+    private Sprite _woterSprite;
+
+    [SerializeField]
     [Header("氷のスプライト")]
-    [SerializeField] private Sprite _icesprite;　
+    private Sprite _iceSprite;
 
-    [SerializeField] private TilemapCollider2D _woterCollider2D;
+    [SerializeField]
+    private TilemapCollider2D _woterCollider2D;
 
-    public Changetile(TilemapCollider2D woterCollider2D)
+    [SerializeField]
+    [Header("セルのポジション")]
+    private Vector3Int _cellPos;
+
+    void GetCellPos(Vector3Int pos)
     {
-        _woterCollider2D = woterCollider2D;
+        _cellPos = new Vector3Int(pos.x, pos.y, pos.z);
     }
 
     public void Spring()
     {
-        foreach (var pos in _Tilemap.cellBounds.allPositionsWithin)
+        foreach (var pos in _tilemap.cellBounds.allPositionsWithin)
         {
-            // 取り出した位置情報からタイルマップ用の位置情報(セル座標)を取得
-            Vector3Int cellPosition = new Vector3Int(pos.x, pos.y, pos.z);
-
-            // tilemap.HasTile -> タイルが設定(描画)されている座標であるか判定
-            if (_Tilemap.HasTile(cellPosition))
+            GetCellPos(pos);
+            // tilemap.HasTileでタイルが設定(描画)されている座標であるか判定
+            if (_tilemap.HasTile(_cellPos))
             {
-                // スプライトが一致しているか判定
-                if (_Tilemap.GetSprite(cellPosition) == _summersprite || _Tilemap.GetSprite(cellPosition) == _autumnsprite || _Tilemap.GetSprite(cellPosition) == _wintersprite)
+                // スプライトが一致しているか判定をとる
+                if (_tilemap.GetSprite(_cellPos) == _seasonSprite[1] || _tilemap.GetSprite(_cellPos) == _seasonSprite[2] || _tilemap.GetSprite(_cellPos) == _seasonSprite[3])
                 {
-                    // 特定のスプライトと一致している場合は別のタイルを設定する
-                    _Tilemap.SetTile(cellPosition, _springtile);
+                    // スプライトが一致している場合は別のタイルを設定する
+                    _tilemap.SetTile(_cellPos, _springtile);
                 }
             }
-            if (_Treemap.HasTile(cellPosition))
+
+            if (_treemap.HasTile(_cellPos))
             {
-                if (_Treemap.GetSprite(cellPosition) == _summertreesprite || _Tilemap.GetSprite(cellPosition) == _autumntreesprite || _Tilemap.GetSprite(cellPosition) == _wintertreesprite)
+                if (_treemap.GetSprite(_cellPos) != _treeSprite[0])
                 {
                     Debug.Log("Spring");
-                    _Treemap.SetTile(cellPosition, _springtreetile);
+                    _treemap.SetTile(_cellPos, _treeTile[0]);
                 }
             }
-            if (_Wotermap.HasTile(cellPosition))
-            {
-                if (_Wotermap.GetSprite(cellPosition) == _icesprite)
-                {
-                    _woterCollider2D.enabled = false;
-                    _Wotermap.SetTile(cellPosition, _wotertile);
-                }
-            }
+            CheckWoter();
         }
     }
+
     public void Summer()
     {
-        foreach(var pos in _Tilemap.cellBounds.allPositionsWithin)
-        {           
-            Vector3Int cellPosition = new Vector3Int(pos.x, pos.y, pos.z);
-            
-            if (_Tilemap.HasTile(cellPosition))
+        foreach (var pos in _tilemap.cellBounds.allPositionsWithin)
+        {
+            GetCellPos(pos);
+            if (_tilemap.HasTile(_cellPos))
             {
-                if (_Tilemap.GetSprite(cellPosition) == _springsprite || _Tilemap.GetSprite(cellPosition) == _autumnsprite || _Tilemap.GetSprite(cellPosition) == _wintersprite)
+                if (_tilemap.GetSprite(_cellPos) == _seasonSprite[0] || _tilemap.GetSprite(_cellPos) == _seasonSprite[2] || _tilemap.GetSprite(_cellPos) == _seasonSprite[3])
                 {
-                    _Tilemap.SetTile(cellPosition, _summertile);
+                    _tilemap.SetTile(_cellPos, _summertile);
                 }
             }
-            if (_Treemap.HasTile(cellPosition))
+            if (_treemap.HasTile(_cellPos))
             {
-                if (_Treemap.GetSprite(cellPosition) == _springtreesprite || _Tilemap.GetSprite(cellPosition) == _autumntreesprite || _Tilemap.GetSprite(cellPosition) == _wintertreesprite)
+                if (_treemap.GetSprite(_cellPos) != _treeSprite[1])
                 {
                     Debug.Log("Summer");
-                    _Treemap.SetTile(cellPosition, _summertreetile);
+                    _treemap.SetTile(_cellPos, _treeTile[1]);
                 }
             }
-            if (_Wotermap.HasTile(cellPosition))
-            {
-                if (_Wotermap.GetSprite(cellPosition) == _icesprite)
-                {
-                    _woterCollider2D.enabled = false;
-                    _Wotermap.SetTile(cellPosition, _wotertile);
-                }
-            }
+            CheckWoter();
         }
     }
+
     public void Autumn()
     {
-        foreach (var pos in _Tilemap.cellBounds.allPositionsWithin)
-        {       
-            Vector3Int cellPosition = new Vector3Int(pos.x, pos.y, pos.z);
-
-            if (_Tilemap.HasTile(cellPosition))
+        foreach (var pos in _tilemap.cellBounds.allPositionsWithin)
+        {
+            GetCellPos(pos);
+            if (_tilemap.HasTile(_cellPos))
             {
-                if (_Tilemap.GetSprite(cellPosition) == _springsprite || _Tilemap.GetSprite(cellPosition) == _summersprite || _Tilemap.GetSprite(cellPosition) == _wintersprite)
+                if (_tilemap.GetSprite(_cellPos) == _seasonSprite[0] || _tilemap.GetSprite(_cellPos) == _seasonSprite[1] || _tilemap.GetSprite(_cellPos) == _seasonSprite[3])
                 {
-                    _Tilemap.SetTile(cellPosition, _autumntile);
+                    _tilemap.SetTile(_cellPos, _autumntile);
                 }
             }
-            if (_Treemap.HasTile(cellPosition))
+            if (_treemap.HasTile(_cellPos))
             {
-                if (_Treemap.GetSprite(cellPosition) == _springtreesprite || _Tilemap.GetSprite(cellPosition) == _summertreesprite || _Tilemap.GetSprite(cellPosition) == _wintertreesprite)
+                if (_treemap.GetSprite(_cellPos) != _treeSprite[2])
                 {
-                    _Treemap.SetTile(cellPosition, _autumntreetile);
+                    _treemap.SetTile(_cellPos, _treeTile[2]);
                     Debug.Log("Autumn");
                 }
             }
-            if (_Wotermap.HasTile(cellPosition))
-            {
-                if (_Wotermap.GetSprite(cellPosition) == _icesprite)
-                {
-                    _woterCollider2D.enabled = false;
-                    _Wotermap.SetTile(cellPosition, _wotertile);
-                }
-            }
+            CheckWoter();
         }
     }
     public void Winter()
     {
-        foreach (var pos in _Tilemap.cellBounds.allPositionsWithin)
+        foreach (var pos in _tilemap.cellBounds.allPositionsWithin)
         {
-            Vector3Int cellPosition = new Vector3Int(pos.x, pos.y, pos.z);
-
-            if (_Tilemap.HasTile(cellPosition))
+            GetCellPos(pos);
+            if (_tilemap.HasTile(_cellPos))
             {
-                if (_Tilemap.GetSprite(cellPosition) == _springsprite || _Tilemap.GetSprite(cellPosition) == _summersprite || _Tilemap.GetSprite(cellPosition) == _autumnsprite)
+                if (_tilemap.GetSprite(_cellPos) == _seasonSprite[0] || _treemap.GetSprite(_cellPos) == _seasonSprite[1] || _tilemap.GetSprite(_cellPos) == _seasonSprite[2])
                 {
-                    _Tilemap.SetTile(cellPosition, _wintertile);
+                    _tilemap.SetTile(_cellPos, _wintertile);
                 }
             }
-            if (_Treemap.HasTile(cellPosition))
+            if (_treemap.HasTile(_cellPos))
             {
-                if (_Treemap.GetSprite(cellPosition) == _springtreesprite || _Tilemap.GetSprite(cellPosition) == _summertreesprite || _Tilemap.GetSprite(cellPosition) == _autumntreesprite)
+                if (_treemap.GetSprite(_cellPos) != _treeSprite[3])
                 {
                     Debug.Log("Winter");
-                    _Treemap.SetTile(cellPosition, _wintertreetile);
+                    _treemap.SetTile(_cellPos, _treeTile[3]);
                 }
             }
 
-            if (_Wotermap.HasTile(cellPosition))
+            CheckWoter();
+        }
+    }
+
+    public void CheckWoter()
+    {
+        if (_wotermap.HasTile(_cellPos))
+        {
+            if (_wotermap.GetSprite(_cellPos) == _woterSprite)
             {
-                if (_Wotermap.GetSprite(cellPosition) == _wotersprite )
-                {
-                    _woterCollider2D.enabled = true;
-                    _Wotermap.SetTile(cellPosition, _icetile);
-                }
+                _woterCollider2D.enabled = true;
+                _wotermap.SetTile(_cellPos, _icetile);
+            }
+
+            else if (_wotermap.GetSprite(_cellPos) == _iceSprite)
+            {
+                _woterCollider2D.enabled = false;
+                _wotermap.SetTile(_cellPos, _wotertile);
             }
         }
     }
