@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,11 +16,11 @@ public class ChangeSeason : MonoBehaviour
         _season[1].enabled = false;
         _season[2].enabled = false;
         _season[3].enabled = false;
-
-        _seasonButton[0].SetActive(false);
-        _seasonButton[1].SetActive(false);
-        _seasonButton[2].SetActive(false);
-        _seasonButton[3].SetActive(false);
+        
+        foreach (var season in _seasonButton)
+        {
+            season.SetActive(false);
+        }
     }
 
     void Update()

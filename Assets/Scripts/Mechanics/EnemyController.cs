@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Platformer.Gameplay;
+﻿using Platformer.Gameplay;
 using UnityEngine;
 using static Platformer.Core.Simulation;
 
@@ -15,20 +13,17 @@ namespace Platformer.Mechanics
         public PatrolPath path;
         public AudioClip ouch;
 
-        internal PatrolPath.Mover mover;
-        internal AnimationController control;
+        internal PatrolPath.Mover _mover;
+        internal AnimationController _control;
         internal Collider2D _collider;
         internal AudioSource _audio;
-        SpriteRenderer spriteRenderer;
-
         public Bounds Bounds => _collider.bounds;
 
         void Awake()
         {
-            control = GetComponent<AnimationController>();
+            _control = GetComponent<AnimationController>();
             _collider = GetComponent<Collider2D>();
             _audio = GetComponent<AudioSource>();
-            spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         void OnCollisionEnter2D(Collision2D collision)
@@ -46,10 +41,9 @@ namespace Platformer.Mechanics
         {
             if (path != null)
             {
-                if (mover == null) mover = path.CreateMover(control.maxSpeed * 0.5f);
-                control.move.x = Mathf.Clamp(mover.Position.x - transform.position.x, -1, 1);
+                if (_mover == null) _mover = path.CreateMover(_control.maxSpeed * 0.5f);
+                _control.move.x = Mathf.Clamp(_mover.Position.x - transform.position.x, -1, 1);
             }
         }
-
     }
 }

@@ -21,7 +21,7 @@ namespace Platformer.Mechanics
         [ContextMenu("Find All Tokens")]
         void FindAllTokensInScene()
         {
-            tokens = UnityEngine.Object.FindObjectsOfType<TokenInstance>();
+            tokens = FindObjectsOfType<TokenInstance>();
         }
 
         void Awake()
@@ -66,6 +66,5 @@ namespace Platformer.Mechanics
                 nextFrameTime += 1f / frameRate;
             }
         }
-
     }
 }

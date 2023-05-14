@@ -9,6 +9,9 @@ public class TimeScript : MonoBehaviour
 
     [SerializeField]
     private TMPro.TextMeshProUGUI _timerText;
+
+    [SerializeField]
+    private SceneLoader _sceneLoader;
     void Update()
     {
         if (_player == true)
@@ -20,7 +23,7 @@ public class TimeScript : MonoBehaviour
                 _minute += 1;
                 _seconds = 0;
             }
-            //テキストにTIME　0とseconds、minuteを追加する
+            //テキストにTIME0とseconds、minuteを追加する
             _timerText.text = _minute.ToString("TIME 0") + ":" + _seconds.ToString("f2");
         }
     }
@@ -33,6 +36,6 @@ public class TimeScript : MonoBehaviour
 
     private void Load()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("SelectScene");
+        _sceneLoader.Fade("SelectScene");
     }
 }

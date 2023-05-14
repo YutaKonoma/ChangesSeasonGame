@@ -19,10 +19,6 @@ namespace Platformer.Core
 
         public void Clear() => items.Clear();
 
-        public bool Contains(T item) => items.Contains(item);
-
-        public void Remove(T item) => items.Remove(item);
-
         public T Peek() => items[0];
 
         public HeapQueue()
@@ -40,7 +36,6 @@ namespace Platformer.Core
 
         public T Pop()
         {
-
             //if there are more than 1 items, returned item will be first in tree.
             //then, add last item to front of tree, shrink the list
             //and find correct index in tree for first item.
@@ -59,7 +54,6 @@ namespace Platformer.Core
             }
             return item;
         }
-
 
         int Compare(T A, T B) => A.CompareTo(B);
 

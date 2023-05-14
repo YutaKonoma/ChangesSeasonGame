@@ -1,37 +1,46 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+public enum Season
+{
+    spring,
+    summer,
+    autum,
+    winter
+}
+
 public class Changetile : MonoBehaviour
 {
     [Header("ベース")]
-    [SerializeField] private Tilemap _tilemap;
-    [SerializeField] private Tilemap _treemap;
-    [SerializeField] private Tilemap _wotermap;
-
-    [Header("季節ごとのタイル")]
-    [SerializeField] private TileBase _springtile;
-    [SerializeField] private TileBase _summertile;
-    [SerializeField] private TileBase _autumntile;
-    [SerializeField] private TileBase _wintertile;
-
-    [Header("季節ごとの木")]
+    [SerializeField] 
+    private Tilemap _tilemap;
     [SerializeField]
+    private Tilemap _treemap;
+    [SerializeField] 
+    private Tilemap _wotermap;
+
+    [SerializeField]
+    [Header("季節ごとのタイル")]
+    private TileBase[] _seasonTile;
+
+    [SerializeField]
+    [Header("季節ごとの木")]
     private TileBase[] _treeTile;
 
-    [Header("水のタイル")]
     [SerializeField]
+    [Header("水のタイル")]
     private TileBase _wotertile;
 
-    [Header("氷のタイル")]
     [SerializeField]
+    [Header("氷のタイル")]
     private TileBase _icetile;
 
-    [Header("季節ごとのスプライト")]
     [SerializeField]
+    [Header("季節ごとのスプライト")]
     private Sprite[] _seasonSprite;
 
-    [Header("季節ごとの木のスプライト")]
     [SerializeField]
+    [Header("季節ごとの木のスプライト")]
     private Sprite[] _treeSprite;
 
     [SerializeField]
@@ -43,12 +52,14 @@ public class Changetile : MonoBehaviour
     private Sprite _iceSprite;
 
     [SerializeField]
+    [Header("水、氷のコライダー")]
     private TilemapCollider2D _woterCollider2D;
 
     [SerializeField]
     [Header("セルのポジション")]
     private Vector3Int _cellPos;
 
+    Season _season;
     void GetCellPos(Vector3Int pos)
     {
         _cellPos = new Vector3Int(pos.x, pos.y, pos.z);
@@ -56,6 +67,7 @@ public class Changetile : MonoBehaviour
 
     public void Spring()
     {
+        _season = Season.spring;
         foreach (var pos in _tilemap.cellBounds.allPositionsWithin)
         {
             GetCellPos(pos);
@@ -66,7 +78,7 @@ public class Changetile : MonoBehaviour
                 if (_tilemap.GetSprite(_cellPos) == _seasonSprite[1] || _tilemap.GetSprite(_cellPos) == _seasonSprite[2] || _tilemap.GetSprite(_cellPos) == _seasonSprite[3])
                 {
                     // スプライトが一致している場合は別のタイルを設定する
-                    _tilemap.SetTile(_cellPos, _springtile);
+                    _tilemap.SetTile(_cellPos, _seasonTile[0]);
                 }
             }
 
@@ -74,16 +86,17 @@ public class Changetile : MonoBehaviour
             {
                 if (_treemap.GetSprite(_cellPos) != _treeSprite[0])
                 {
-                    Debug.Log("Spring");
                     _treemap.SetTile(_cellPos, _treeTile[0]);
                 }
             }
+
             CheckWoter();
         }
     }
 
     public void Summer()
     {
+        _season = Season.summer;
         foreach (var pos in _tilemap.cellBounds.allPositionsWithin)
         {
             GetCellPos(pos);
@@ -91,23 +104,25 @@ public class Changetile : MonoBehaviour
             {
                 if (_tilemap.GetSprite(_cellPos) == _seasonSprite[0] || _tilemap.GetSprite(_cellPos) == _seasonSprite[2] || _tilemap.GetSprite(_cellPos) == _seasonSprite[3])
                 {
-                    _tilemap.SetTile(_cellPos, _summertile);
+                    _tilemap.SetTile(_cellPos, _seasonTile[1]);
                 }
             }
+
             if (_treemap.HasTile(_cellPos))
             {
                 if (_treemap.GetSprite(_cellPos) != _treeSprite[1])
                 {
-                    Debug.Log("Summer");
                     _treemap.SetTile(_cellPos, _treeTile[1]);
                 }
             }
+
             CheckWoter();
         }
     }
 
     public void Autumn()
     {
+        _season = Season.autum;
         foreach (var pos in _tilemap.cellBounds.allPositionsWithin)
         {
             GetCellPos(pos);
@@ -115,22 +130,24 @@ public class Changetile : MonoBehaviour
             {
                 if (_tilemap.GetSprite(_cellPos) == _seasonSprite[0] || _tilemap.GetSprite(_cellPos) == _seasonSprite[1] || _tilemap.GetSprite(_cellPos) == _seasonSprite[3])
                 {
-                    _tilemap.SetTile(_cellPos, _autumntile);
+                    _tilemap.SetTile(_cellPos, _seasonTile[2]);
                 }
             }
+
             if (_treemap.HasTile(_cellPos))
             {
                 if (_treemap.GetSprite(_cellPos) != _treeSprite[2])
                 {
                     _treemap.SetTile(_cellPos, _treeTile[2]);
-                    Debug.Log("Autumn");
                 }
             }
+
             CheckWoter();
         }
     }
     public void Winter()
     {
+        _season = Season.winter;
         foreach (var pos in _tilemap.cellBounds.allPositionsWithin)
         {
             GetCellPos(pos);
@@ -138,14 +155,14 @@ public class Changetile : MonoBehaviour
             {
                 if (_tilemap.GetSprite(_cellPos) == _seasonSprite[0] || _treemap.GetSprite(_cellPos) == _seasonSprite[1] || _tilemap.GetSprite(_cellPos) == _seasonSprite[2])
                 {
-                    _tilemap.SetTile(_cellPos, _wintertile);
+                    _tilemap.SetTile(_cellPos, _seasonTile[3]);
                 }
             }
+
             if (_treemap.HasTile(_cellPos))
             {
                 if (_treemap.GetSprite(_cellPos) != _treeSprite[3])
                 {
-                    Debug.Log("Winter");
                     _treemap.SetTile(_cellPos, _treeTile[3]);
                 }
             }
@@ -155,16 +172,16 @@ public class Changetile : MonoBehaviour
     }
 
     public void CheckWoter()
-    {
+    {    
         if (_wotermap.HasTile(_cellPos))
         {
-            if (_wotermap.GetSprite(_cellPos) == _woterSprite)
+            if (_wotermap.GetSprite(_cellPos) == _woterSprite && _season == Season.winter)
             {
                 _woterCollider2D.enabled = true;
                 _wotermap.SetTile(_cellPos, _icetile);
             }
 
-            else if (_wotermap.GetSprite(_cellPos) == _iceSprite)
+            else if (_wotermap.GetSprite(_cellPos) == _iceSprite && _season != Season.winter)
             {
                 _woterCollider2D.enabled = false;
                 _wotermap.SetTile(_cellPos, _wotertile);

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Platformer.Gameplay;
 using static Platformer.Core.Simulation;
 using Platformer.Model;
@@ -108,15 +106,15 @@ namespace Platformer.Mechanics
         {
             if (jump && IsGrounded)
             {
-                velocity.y = jumpTakeOffSpeed * model.jumpModifier;
+                _velocity.y = jumpTakeOffSpeed * model.jumpModifier;
                 jump = false;
             }
             else if (stopJump)
             {
                 stopJump = false;
-                if (velocity.y > 0)
+                if (_velocity.y > 0)
                 {
-                    velocity.y = velocity.y * model.jumpDeceleration;
+                    _velocity.y = _velocity.y * model.jumpDeceleration;
                 }
             }
 
@@ -126,7 +124,7 @@ namespace Platformer.Mechanics
                 spriteRenderer.flipX = true;
 
             animator.SetBool("grounded", IsGrounded);
-            animator.SetFloat("velocityX", Mathf.Abs(velocity.x) / maxSpeed);
+            animator.SetFloat("velocityX", Mathf.Abs(_velocity.x) / maxSpeed);
 
             targetVelocity = move * maxSpeed;
         }

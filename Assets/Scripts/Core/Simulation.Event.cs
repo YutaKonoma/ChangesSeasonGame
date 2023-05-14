@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace Platformer.Core
+﻿namespace Platformer.Core
 {
     public static partial class Simulation
     {
@@ -28,15 +26,6 @@ namespace Platformer.Core
             {
                 if (Precondition())
                     Execute();
-            }
-
-            /// <summary>
-            /// This method is generally used to set references to null when required.
-            /// It is automatically called by the Simulation when an event has completed.
-            /// </summary>
-            internal virtual void Cleanup()
-            {
-
             }
         }
 
