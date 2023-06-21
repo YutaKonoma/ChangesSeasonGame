@@ -9,14 +9,14 @@ public enum Season
     winter
 }
 
-public class Changetile : MonoBehaviour
+public class ChangeTile : MonoBehaviour
 {
     [Header("ベース")]
-    [SerializeField] 
+    [SerializeField]
     private Tilemap _tilemap;
     [SerializeField]
     private Tilemap _treemap;
-    [SerializeField] 
+    [SerializeField]
     private Tilemap _wotermap;
 
     [SerializeField]
@@ -55,16 +55,17 @@ public class Changetile : MonoBehaviour
     [Header("水、氷のコライダー")]
     private TilemapCollider2D _woterCollider2D;
 
-    [SerializeField]
-    [Header("セルのポジション")]
+    [Tooltip("セルのポジション")]
     private Vector3Int _cellPos;
 
     Season _season;
-    void GetCellPos(Vector3Int pos)
+
+    private void GetCellPos(Vector3Int pos) 
     {
         _cellPos = new Vector3Int(pos.x, pos.y, pos.z);
     }
 
+    #region spring
     public void Spring()
     {
         _season = Season.spring;
@@ -93,7 +94,9 @@ public class Changetile : MonoBehaviour
             CheckWoter();
         }
     }
+    #endregion
 
+    #region Summer
     public void Summer()
     {
         _season = Season.summer;
@@ -119,7 +122,9 @@ public class Changetile : MonoBehaviour
             CheckWoter();
         }
     }
+    #endregion
 
+    #region Autumu
     public void Autumn()
     {
         _season = Season.autum;
@@ -145,6 +150,9 @@ public class Changetile : MonoBehaviour
             CheckWoter();
         }
     }
+    #endregion
+
+    #region Winter
     public void Winter()
     {
         _season = Season.winter;
@@ -153,7 +161,7 @@ public class Changetile : MonoBehaviour
             GetCellPos(pos);
             if (_tilemap.HasTile(_cellPos))
             {
-                if (_tilemap.GetSprite(_cellPos) == _seasonSprite[0] || _treemap.GetSprite(_cellPos) == _seasonSprite[1] || _tilemap.GetSprite(_cellPos) == _seasonSprite[2])
+                if (_tilemap.GetSprite(_cellPos) == _seasonSprite[0] || _tilemap.GetSprite(_cellPos) == _seasonSprite[1] || _tilemap.GetSprite(_cellPos) == _seasonSprite[2])
                 {
                     _tilemap.SetTile(_cellPos, _seasonTile[3]);
                 }
@@ -170,9 +178,11 @@ public class Changetile : MonoBehaviour
             CheckWoter();
         }
     }
+    #endregion
 
-    public void CheckWoter()
-    {    
+    #region Woter
+    private void CheckWoter()
+    {
         if (_wotermap.HasTile(_cellPos))
         {
             if (_wotermap.GetSprite(_cellPos) == _woterSprite && _season == Season.winter)
@@ -188,4 +198,5 @@ public class Changetile : MonoBehaviour
             }
         }
     }
+    #endregion
 }

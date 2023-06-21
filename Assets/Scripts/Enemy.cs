@@ -1,4 +1,3 @@
-using Platformer.Mechanics;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,8 +11,8 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        var player = collision.gameObject.GetComponent<PlayerController>();
-        if (player != null)
+        //var player = collision.gameObject.GetComponent<>();
+        //if (player != null)
         {
 
         }

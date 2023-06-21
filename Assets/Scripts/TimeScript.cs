@@ -1,17 +1,18 @@
 using UnityEngine;
 
-public class TimeScript : MonoBehaviour
+public class TimeScript 
 {
     private int _minute;
     private float _seconds;
 
     private bool _player = true;
 
-    [SerializeField]
-    private TMPro.TextMeshProUGUI _timerText;
+    private SceneLoader _sceneLoader;
 
     [SerializeField]
-    private SceneLoader _sceneLoader;
+    [Header("経過時間を表示するUI")]
+    private UnityEngine.UI.Text _timerText;
+
     void Update()
     {
         if (_player == true)
@@ -26,16 +27,10 @@ public class TimeScript : MonoBehaviour
             //テキストにTIME0とseconds、minuteを追加する
             _timerText.text = _minute.ToString("TIME 0") + ":" + _seconds.ToString("f2");
         }
-    }
-
-    void StageClear()
-    {
-        _player = false;
-        Invoke(nameof(Load), 3.5f);
-    }
-
-    private void Load()
-    {
-        _sceneLoader.Fade("SelectScene");
+        else 
+        {
+            _sceneLoader = SceneLoader.Instance;
+            _sceneLoader.LoadScene("StageSelectScene");
+        }
     }
 }

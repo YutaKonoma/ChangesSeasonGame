@@ -15,12 +15,13 @@ public class StartScene : MonoBehaviour
 
     void Awake()
     {
+        _sceneLoader = GetComponent<SceneLoader>();
         _explanation.enabled = false;
     }
 
     public void StartGame()
     {
-        _sceneLoader.Fade("SelectScene");
+        _sceneLoader.LoadScene("SelectScene");
     }
 
     public void OnButton()
