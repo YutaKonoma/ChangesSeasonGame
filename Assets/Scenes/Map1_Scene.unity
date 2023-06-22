@@ -25260,7 +25260,7 @@ GameObject:
   - component: {fileID: 1090666647}
   m_Layer: 0
   m_Name: DeathZone
-  m_TagString: Untagged
+  m_TagString: Destroy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -26070,6 +26070,11 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!95 &1732240124 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 3417910134014029192, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
+  m_PrefabInstance: {fileID: 3417910133077619687}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1754240606
 GameObject:
   m_ObjectHideFlags: 0
@@ -31007,6 +31012,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3417910134014029193, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
+      propertyPath: _animator
+      value: 
+      objectReference: {fileID: 1732240124}
+    - target: {fileID: 3417910134014029193, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
       propertyPath: _isGround
       value: 1
       objectReference: {fileID: 0}
@@ -31020,7 +31029,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3417910134014029193, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
       propertyPath: _junpPower
-      value: 4
+      value: 0.0005
       objectReference: {fileID: 0}
     - target: {fileID: 3417910134014029193, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
       propertyPath: _junpSpeed
@@ -31033,7 +31042,7 @@ PrefabInstance:
     - target: {fileID: 3417910134014029193, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
       propertyPath: _spawnPoint
       value: 
-      objectReference: {fileID: 421228358}
+      objectReference: {fileID: 421228356}
     - target: {fileID: 3417910134014029193, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
       propertyPath: _rayDistance
       value: 0.45
@@ -31048,7 +31057,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3417910134014029194, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
       propertyPath: m_GravityScale
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3417910134014029196, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
       propertyPath: _hold

@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using UniRx;
 using Unity.VisualScripting;
@@ -81,9 +82,20 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        _player = false;
-        _vector.x = 0;
+        if (collision.gameObject.CompareTag("Destroy"))
+        {
+            _player = false;
+            _vector.x = 0;
+            _animator.SetTrigger("hurt");
+            _animator.SetBool("dead", true);
+            Observable.TimerFrame(300).Subscribe(_ => ReStart()).AddTo(this);
+        }
+    }
 
+    private void ReStart()
+    {
+        _animator.SetBool("dead", false);
         transform.position = _spawnPoint.transform.position;
+        _player = true;
     }
 }
