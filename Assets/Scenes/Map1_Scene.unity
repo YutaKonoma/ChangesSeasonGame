@@ -442,16 +442,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5fad313ecc1112478132933cd450523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _season:
+  _image: {fileID: 1418802452}
+  _seasonImag:
   - {fileID: 901110029}
   - {fileID: 1856215804}
   - {fileID: 68302525}
   - {fileID: 529307671}
-  _seasonButton:
-  - {fileID: 991234822}
-  - {fileID: 1524673475}
-  - {fileID: 519926436}
-  - {fileID: 426253263}
 --- !u!1 &241258838
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,7 +570,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 421228357}
-  - component: {fileID: 421228358}
   m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: Untagged
@@ -597,18 +592,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &421228358
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 421228356}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: edbd2de56ca282a439ff82de9d05ddd5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &426253263
 GameObject:
   m_ObjectHideFlags: 0
@@ -30575,6 +30558,17 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1830959422 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3417910134014029196, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
+  m_PrefabInstance: {fileID: 3417910133077619687}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1082b471df157d44aac24e139824ee9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1856215802
 GameObject:
   m_ObjectHideFlags: 0
@@ -30959,6 +30953,34 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3417910134014029185, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3417910134014029185, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3417910134014029185, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1830959422}
+    - target: {fileID: 3417910134014029185, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3417910134014029185, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnChange
+      objectReference: {fileID: 0}
+    - target: {fileID: 3417910134014029185, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerAction, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 3417910134014029185, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3417910134014029190, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -31057,12 +31079,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3417910134014029194, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
       propertyPath: m_GravityScale
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3417910134014029196, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
       propertyPath: _hold
       value: 
       objectReference: {fileID: -6719775216785430824, guid: 7804fe6f384122946948b22172487e7b, type: 3}
+    - target: {fileID: 3417910134014029196, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
+      propertyPath: _changeSeason
+      value: 
+      objectReference: {fileID: 195953689}
     - target: {fileID: 3417910134014029196, guid: 7d60c822c3f1b408ea7a00ecdb5e047a, type: 3}
       propertyPath: _holdAction.m_Id
       value: 61532274-0c98-4585-9088-d28d7bb394da

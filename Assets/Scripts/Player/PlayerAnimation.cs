@@ -6,5 +6,4 @@ public class PlayerAnimation : MonoBehaviour
 {
     Animator _animator;
 
-
 }

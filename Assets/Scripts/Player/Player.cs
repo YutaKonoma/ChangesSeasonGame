@@ -1,10 +1,7 @@
 using Cysharp.Threading.Tasks;
-using System.Collections;
+using System;
 using UniRx;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class Player : MonoBehaviour
 {
@@ -43,7 +40,7 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     [Header("Rayで取得するレイヤー")]
-    LayerMask  _layerMask;
+    LayerMask _layerMask;
 
     [SerializeField]
     Animator _animator;
@@ -51,7 +48,7 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         _isGrounded = Physics2D.Raycast(transform.position, Vector2.down, _rayDistance, _layerMask);
-
+        Debug.DrawRay(transform.position, Vector2.down);
         _animator.SetBool("grounded", _isGrounded);
         _animator.SetFloat("velocityX", Mathf.Abs(_vector.x) / _speed);
     }
@@ -67,7 +64,6 @@ public class Player : MonoBehaviour
             transform.rotation = _sprite ? Quaternion.Euler(0, 160, 0) : Quaternion.Euler(0, 0, 0);
         }
         else _vector.x = 0;
-
         _rb2.velocity = new Vector2(_vector.x * _speed, 0);
     }
 
@@ -88,7 +84,13 @@ public class Player : MonoBehaviour
             _vector.x = 0;
             _animator.SetTrigger("hurt");
             _animator.SetBool("dead", true);
-            Observable.TimerFrame(300).Subscribe(_ => ReStart()).AddTo(this);
+            var state = _animator.GetCurrentAnimatorStateInfo(0);
+            Observable.Timer(TimeSpan.FromSeconds(state.length)).Subscribe(_ => ReStart()).AddTo(this);
+        }
+        else if (collision.gameObject.CompareTag("Clear"))
+        {
+            _player = false;
+            Debug.Log("クリア");
         }
     }
 

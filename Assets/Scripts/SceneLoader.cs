@@ -1,11 +1,11 @@
-using UnityEngine;
-using DG.Tweening;
-using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using System;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class SceneLoader :SingletonMonoBehaviour<SceneLoader>
-{ 
+public class SceneLoader : SingletonMonoBehaviour<SceneLoader>
+{
     [SerializeField]
     string _sceneName;
 
@@ -47,6 +47,6 @@ public class SceneLoader :SingletonMonoBehaviour<SceneLoader>
                  .Append(_fadeObject[0].DOMoveX(_startPos1.x, 2f))
                  .Join(_fadeObject[1].DOMoveX(_startPos2.x, 2f))
                  .OnComplete(() => DOTween.Kill(this));
-        }      
+        }
     }
 }

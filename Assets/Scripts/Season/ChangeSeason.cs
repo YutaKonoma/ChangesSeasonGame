@@ -1,90 +1,20 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ChangeSeason : MonoBehaviour
 {
     [SerializeField]
-    [Header("季節4つの画像")]
-    private Image[] _season;
+    [Header("全体の画像")]
+    private GameObject _image;
 
     [SerializeField]
-    [Header("季節を変更するボタン")]
-    private GameObject[] _seasonButton;
+    [Header("季節4つの画像")]
+    private Image[] _seasonImag;
 
-    void Start()
+    public void SeasonChange()
     {
-        _season[1].enabled = false;
-        _season[2].enabled = false;
-        _season[3].enabled = false;
-        
-        foreach (var season in _seasonButton)
-        {
-            season.SetActive(false);
-        }
-    }
-
-    void Update()
-    {
-        if (Input.GetButtonUp("Change"))　//チェンジに割り振られたボタンが押された場合
-        {
-            _seasonButton[0].SetActive(true);
-            _seasonButton[1].SetActive(true);
-            _seasonButton[2].SetActive(true);
-            _seasonButton[3].SetActive(true);
-        }
-    }
-
-    public void SeasonButton(int num)
-    {
-        switch (num)
-        {
-            case 0:
-                _season[0].enabled = true;
-                _season[1].enabled = false;
-                _season[2].enabled = false;
-                _season[3].enabled = false;
-                _seasonButton[0].SetActive(false);
-                _seasonButton[1].SetActive(false);
-                _seasonButton[2].SetActive(false);
-                _seasonButton[3].SetActive(false);
-
-            break;
-
-            case 1:
-                _season[0].enabled = false;
-                _season[1].enabled = true;
-                _season[2].enabled = false;
-                _season[3].enabled = false;
-                _seasonButton[0].SetActive(false);
-                _seasonButton[1].SetActive(false);
-                _seasonButton[2].SetActive(false);
-                _seasonButton[3].SetActive(false);
-
-                break;
-
-            case 2:
-                _season[0].enabled = false;
-                _season[1].enabled = false;
-                _season[2].enabled = true;
-                _season[3].enabled = false;
-                _seasonButton[0].SetActive(false);
-                _seasonButton[1].SetActive(false);
-                _seasonButton[2].SetActive(false);
-                _seasonButton[3].SetActive(false);
-
-                break;
-
-            case 3:
-                _season[0].enabled = false;
-                _season[1].enabled = false;
-                _season[2].enabled = false;
-                _season[3].enabled = true;
-                _seasonButton[0].SetActive(false);
-                _seasonButton[1].SetActive(false);
-                _seasonButton[2].SetActive(false);
-                _seasonButton[3].SetActive(false);
-
-                break;
-        }
+        _image.transform.DOMove(new Vector2(900, 500), 1);
+        Debug.Log("dotween");
     }
 }

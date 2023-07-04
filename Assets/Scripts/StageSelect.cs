@@ -19,7 +19,8 @@ public class StageSelect : MonoBehaviour
         _sceneLoader = SceneLoader.Instance;
         _canvas.SetActive(false);
     }
-    void OnTriggerEnter()
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         _canvas.SetActive(true);
     }
